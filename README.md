@@ -1,8 +1,8 @@
 # yearbook-mcp
 
 Public docs + issue tracker for the **e-yearbook.com** MCP (Model Context
-Protocol) server. The server lets any MCP-aware AI agent search >300,000
-U.S. yearbooks indexed by name.
+Protocol) server. The server lets any MCP-aware AI agent search over
+300,000 U.S. yearbooks indexed by name.
 
 | | |
 |---|---|
@@ -16,9 +16,9 @@ U.S. yearbooks indexed by name.
 
 ## What's in the archive
 
-- >22,000 schools across all 50 U.S. states and territories
-- >300,000 distinct (school, year) yearbooks
-- >100M extracted person mentions
+- Over 22,000 schools across all 50 U.S. states and territories
+- Over 300,000 distinct (school, year) yearbooks
+- Over 100M extracted person mentions
 
 Coverage spans U.S. high schools, colleges, universities, and military
 cruise books from the 1850s to present.
