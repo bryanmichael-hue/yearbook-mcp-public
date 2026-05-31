@@ -1,7 +1,7 @@
 # yearbook-mcp
 
 Public docs + issue tracker for the **e-yearbook.com** MCP (Model Context
-Protocol) server. The server lets any MCP-aware AI agent search 307,000+
+Protocol) server. The server lets any MCP-aware AI agent search >300,000
 U.S. yearbooks indexed by name.
 
 | | |
@@ -17,9 +17,8 @@ U.S. yearbooks indexed by name.
 ## What's in the archive
 
 - 22,545 schools across all 50 U.S. states and territories
-- 307,412 distinct (school, year) yearbooks
-- 95.9M extracted person mentions (legacy OCR, broad-coverage tier)
-- 1.65M enriched profiles (DocAI OCR + entity resolution, high-confidence tier)
+- >300,000 distinct (school, year) yearbooks
+- >100M extracted person mentions
 
 Coverage spans U.S. high schools, colleges, universities, and military
 cruise books from the 1850s to present.
@@ -34,8 +33,6 @@ depends on the bearer token's scope.
 - Coarsened state or region, decade bin, confidence band
 - Opaque 30-day `lead_id` for follow-up `fetch`
 - Sufficient to answer *"is this person in our archive?"*
-- **Never** discloses the identifying triple: school name, exact year,
-  or canonical name. School + year is the paywall.
 
 **Paid tier** (subscription required, response shape: `payment_required`
 with a `checkout_url`):
@@ -189,11 +186,6 @@ checkout URL to the user.
   to e-yearbook.com.
 - **Recent-year suppression.** Person-level hits from yearbooks ≤ 20
   years old are dropped from free-tier responses.
-- **Triple-safe responses.** Free results never confirm the
-  identifying triple of *school + exact year + canonical name*.
-  Combining 2+ of (school, year, name) in a free request returns a
-  byte-identical `verification_required` envelope regardless of
-  warehouse content — the privacy model prevents hit/miss disclosure.
 - **Opt-out.** Email **support@digitaldataonline.com** with the name
   and any identifying details (state, approximate year) to request
   removal from search results at all tiers. Full privacy statement:
