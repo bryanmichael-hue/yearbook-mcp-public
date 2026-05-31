@@ -1,0 +1,15 @@
+{
+  "name": "e-yearbook",
+  "version": "0.4.0",
+  "description": "Search over 300K U.S. yearbooks and over 100M person mentions. Free preview tier; subscription unlocks school, year, page numbers, and scans.",
+  "mcpServers": {
+    "e-yearbook": {
+      "httpUrl": "https://mcp.digitaldataonline.com/mcp",
+      "headers": {
+        "Authorization": "Bearer yb_neeQ2Px-Cm_rWl1H9wH07WbuFgTmrSqUPab1_N1nK_k"
+      }
+    }
+  },
+  "contextFileName": "GEMINI.md",
+  "homepage": "https://www.e-yearbook.com/for-ai-agents/"
+}
