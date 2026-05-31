@@ -16,7 +16,7 @@ U.S. yearbooks indexed by name.
 
 ## What's in the archive
 
-- 22,545 schools across all 50 U.S. states and territories
+- >22,000 schools across all 50 U.S. states and territories
 - >300,000 distinct (school, year) yearbooks
 - >100M extracted person mentions
 
