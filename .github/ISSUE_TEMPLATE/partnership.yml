@@ -1,0 +1,68 @@
+name: Partnership or integration
+description: Distribution partner, registry listing, paid integration, or co-marketing inquiry.
+title: "[partnership] "
+labels: ["partnership"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for distribution, registry listings, custom
+        integrations, co-marketing, or anything else that doesn't fit
+        a simple token request or a bug report.
+
+        Examples of things to ask here:
+        - Adding e-yearbook to your AI directory / catalog
+        - Co-integration with a related genealogy product
+        - Custom paid-tier bundle for an organisation
+        - Press / podcast / newsletter coverage
+
+  - type: input
+    id: company
+    attributes:
+      label: Company or project name
+    validations:
+      required: true
+
+  - type: input
+    id: contact
+    attributes:
+      label: Best contact email
+    validations:
+      required: true
+
+  - type: input
+    id: website
+    attributes:
+      label: Website
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of partnership?
+      options:
+        - Distribution / directory listing
+        - Co-integration (technical)
+        - Reseller / paid bundle
+        - Press / media
+        - Co-marketing / referral
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: |
+        What you're proposing, what we'd each be responsible for, any
+        relevant timing (e.g., before a launch you're planning).
+    validations:
+      required: true
+
+  - type: textarea
+    id: reach
+    attributes:
+      label: Audience / reach
+      description: "Order-of-magnitude: monthly users, mailing list size, social reach, etc."

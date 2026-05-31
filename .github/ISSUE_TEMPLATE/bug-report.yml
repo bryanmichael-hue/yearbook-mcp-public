@@ -1,0 +1,70 @@
+name: Bug or unexpected response
+description: A tool returned the wrong shape, the server is unreachable, or behaviour disagrees with the docs.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Privacy heads-up**: don't paste real PII (full names + states + years)
+        unless you can't reproduce without them. If you must, redact the
+        identifying fields in the example and we'll work with you over email.
+
+        Privacy / opt-out questions: email support@digitaldataonline.com.
+        Not handled via GitHub issues.
+
+  - type: input
+    id: tool
+    attributes:
+      label: Which tool?
+      placeholder: "e.g., search_people_preview"
+    validations:
+      required: true
+
+  - type: textarea
+    id: request
+    attributes:
+      label: Request
+      description: "The JSON-RPC body or tool arguments you sent. Redact PII."
+      render: json
+    validations:
+      required: true
+
+  - type: textarea
+    id: response
+    attributes:
+      label: Actual response
+      description: "What came back. Redact PII."
+      render: json
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected response
+      description: "What you expected to see, and why."
+    validations:
+      required: true
+
+  - type: input
+    id: client
+    attributes:
+      label: Client + version
+      description: "Claude Desktop / Cursor / Continue / Cline / Goose / Gemini CLI / curl / your own — plus version where known."
+    validations:
+      required: true
+
+  - type: input
+    id: timestamp
+    attributes:
+      label: Approximate request timestamp (UTC)
+      description: "Helps us match against server logs."
+      placeholder: "e.g., 2026-05-31 16:42 UTC"
+
+  - type: input
+    id: client_id_label
+    attributes:
+      label: Token label (if applicable)
+      description: "DO NOT paste the token itself. If you minted a named token, the label here helps us correlate."
+      placeholder: "e.g., public-free, my-named-token-label"

@@ -1,0 +1,78 @@
+name: Token request
+description: Request a higher rate-limit token, a named-tier token, or an organisation-scoped token.
+title: "[token] "
+labels: ["token-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The public-free token in the README (60 req/min, 200 combos/day,
+        free.search scope) is paste-and-go for most use cases. Use this
+        form when you need higher limits, a named token (one per
+        application or per organisation), or paid-tier scopes.
+
+        Privacy / opt-out questions: please email
+        support@digitaldataonline.com directly — do NOT use this form.
+
+  - type: input
+    id: requester
+    attributes:
+      label: Requesting application or organisation
+      description: "Name + a website / repo URL if available."
+      placeholder: "e.g., Goldie May (https://www.goldiemay.com)"
+    validations:
+      required: true
+
+  - type: input
+    id: contact
+    attributes:
+      label: Contact email
+      description: "We'll reply here. Used for the token delivery and any follow-ups."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Desired scope
+      options:
+        - free.search (higher rate limit)
+        - paid.report (subscription bundle for an organisation)
+        - both
+        - other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: usage
+    attributes:
+      label: Expected usage
+      description: |
+        Roughly: queries per day, peak concurrency, whether the token is
+        embedded in a hosted product vs used by a single developer.
+      placeholder: |
+        - ~5,000 queries/day, peak ~20 concurrent
+        - Embedded in a hosted browser extension
+        - Tokens issued per-end-user vs one shared by all users (which?)
+    validations:
+      required: true
+
+  - type: textarea
+    id: integration
+    attributes:
+      label: How will the MCP be surfaced to end users?
+      description: |
+        Briefly: what kind of product, what UI shows search results,
+        what the citation flow looks like.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: Acknowledgements
+      options:
+        - label: "I will follow the data policy (no training use, surface the e-yearbook landing URL when citing, respect lead_id semantics)."
+          required: true
+        - label: "I understand free.search tier returns coarsened metadata only; paid tier is required for school, exact year, and page-level data."
+          required: true
