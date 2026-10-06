@@ -2,14 +2,39 @@
 # Fixed-scope Uno discovery refresh. No Apache restart, ecommerce or Stripe changes.
 set -eu
 umask 077
-test "$(/usr/bin/uname -n)" = uno
-test "$(/usr/xpg4/bin/id -u)" = 0
-D=/usr/local/apache/htdocs
+fail() { echo "REFUSED: $*" >&2; exit 1; }
+test "$(/usr/bin/uname -n)" = uno || fail 'run on uno'
+test "$(/usr/xpg4/bin/id -u)" = 0 || fail 'run as root on uno'
+# Uno's observed, root-owned /usr/local -> /export/local alias is intentional.
+# Write via the physical path, after checking its ancestry, not through the alias.
+D=/export/local/apache/htdocs
 W=/var/opt/yb-discovery-20261006
-test -d "$D" && test ! -L "$D"
-for d in /usr /usr/local /usr/local/apache "$D" "$D/for-ai-agents" "$D/.well-known"; do
-    test -d "$d" && test ! -L "$d"
-done
+/usr/bin/perl - 0 /usr/local /export/local \
+    / /usr /export /export/local /export/local/apache "$D" \
+    "$D/for-ai-agents" "$D/.well-known" /var /var/opt <<'YB_UNO_PREFLIGHT'
+use strict;
+use warnings;
+use Fcntl ':mode';
+use Cwd 'realpath';
+my $owner = shift @ARGV;
+my $alias = shift @ARGV;
+my $physical = shift @ARGV;
+my @a = lstat($alias);
+die "REFUSED: unexpected alias $alias\n"
+    unless @a && S_ISLNK($a[2]) && $a[4] == $owner
+        && readlink($alias) eq $physical;
+my $resolved = realpath("$alias/apache/htdocs");
+die "REFUSED: document-root alias resolves elsewhere\n"
+    unless defined($resolved) && $resolved eq "$physical/apache/htdocs";
+for my $p (@ARGV) {
+    my @s = lstat($p);
+    die "REFUSED: missing directory $p\n" unless @s;
+    die "REFUSED: not a physical directory $p\n" unless S_ISDIR($s[2]);
+    die "REFUSED: unexpected owner or writable ancestry $p\n"
+        unless $s[4] == $owner && ($s[2] & 0022) == 0;
+}
+print "UNO_PREFLIGHT_OK; approved alias and physical ancestry verified; no mutation.\n";
+YB_UNO_PREFLIGHT
 mkdir -m 0700 "$W"
 mkdir -m 0700 "$W/original" "$W/staged"
 # Preserve the exact originals and permissions before changing any public file.
