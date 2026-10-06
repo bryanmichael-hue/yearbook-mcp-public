@@ -3,7 +3,7 @@
 This extension connects Gemini CLI to the **e-yearbook.com** archive
 via MCP (Model Context Protocol). You can search over 300,000 U.S.
 yearbooks (high school, college, military cruise books, 1850s to
-present) containing over 100 million person mentions.
+present) with over 95 million searchable person mentions.
 
 ## When to use
 
@@ -26,16 +26,40 @@ present) containing over 100 million person mentions.
   `state`, `year_from`+`year_to` (bounded range), or `school`. Bare
   `name`-only searches return `filter_required` — add a filter and retry.
 
-**Paid tools** (`get_person_summary`, `get_yearbook_report`):
-- Visible in `tools/list` but return `payment_required` with a
-  `checkout_url` in the free tier
-- Present the checkout URL to the user when they want full school + year
-  + page + scan details
+**Summary bundle — `person_bundle_10_v1`:** $1.99 for up to 10 unique people
+over 24 hours. `get_person_summary(lead_id)` returns an offer when checkout is
+enabled; after confirmed payment, retry it and keep the private `bundle_token`
+for additional people. Re-viewing claimed people is free until expiry. Images
+are not included. During a checkout pause, honor `image_delivery_pending` and
+`checkout_available: false`; existing live entitlements can still restore.
+
+**Exact image — `occurrence_image_v3`:** a separate $1.99 purchase for one
+verified exact page image, with 30 days of hosted re-access from successful
+payment. Current coverage is released, verified University of California
+Berkeley 1921 occurrences only—not every page or search result.
+
+This is a separate HTTP integration, not a public MCP tool:
+
+- `POST /payments/checkout/image`: create or reuse checkout.
+- `POST /access/image/link`: obtain a fresh link after payment.
+- Send `lead_id` and `occurrence` in a JSON body to the MCP host, not in these
+  route URLs. The occurrence is a verified release digest, not a page number.
+- **Current MCP search does not supply the image occurrence digest.** An
+  integration needs a provisioned occurrence mapping; never invent one or buy
+  a summary bundle expecting an image. Contact support for integration help.
+- Image links are 5-minute bearer capabilities: anyone holding a valid link
+  can use it. Keep them private. The hosted entitlement lasts 30 days; refunds
+  and revocation stop access. A return from Checkout is not payment proof.
+
+**Yearbook report:** `get_yearbook_report` uses separate subscription access.
+No product here promises archive-wide scans. Always honor the live response;
+ask the user before initiating a purchase.
 
 ## Tools you have available
 
 | Tool | Use for |
 |---|---|
+| `health_check` | Connection diagnostics |
 | `search` | OpenAI-compatible generic discovery; routes by query shape |
 | `fetch` | Resolve a `lead_id` to citation-safe metadata |
 | `search_people_preview` | Name lookup. Requires a narrowing filter. |
@@ -45,7 +69,7 @@ present) containing over 100 million person mentions.
 | `get_school_collection` | Full school record + all volumes |
 | `get_yearbook_metadata` | Metadata for a single yearbook |
 | `request_missing_yearbook` | Submit a missing-yearbook request |
-| `get_person_summary` (paid) | Unlock school, exact year, page numbers, scan URL |
+| `get_person_summary` (paid) | Summary bundle: identifying details where available, not images |
 | `get_yearbook_report` (paid) | Enriched profile (organizations, activities, classmates) |
 
 ## Citation behaviour

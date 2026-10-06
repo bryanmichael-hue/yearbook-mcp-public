@@ -1,7 +1,7 @@
 {
   "name": "e-yearbook",
-  "version": "0.4.0",
-  "description": "Search over 300K U.S. yearbooks and over 100M person mentions. Free preview tier; subscription unlocks school, year, page numbers, and scans.",
+  "version": "0.5.0",
+  "description": "Search 300K+ U.S. yearbooks with free privacy-limited previews. Summary bundles and limited exact-image HTTP access are separate products.",
   "mcpServers": {
     "e-yearbook": {
       "httpUrl": "https://mcp.digitaldataonline.com/mcp",
